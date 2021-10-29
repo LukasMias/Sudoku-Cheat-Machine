@@ -1,0 +1,59 @@
+
+.label{
+    -fx-font: 12px arial;
+    -fx-text-alignment: justify;
+}
+
+.label:hintLabel {
+    -fx-text-fill: grey;
+}
+
+.label:ghostLabel{
+    -fx-text-fill: #090;
+    -fx-font: 48px arial;
+    -fx-min-height: 120px;
+    -fx-max-height: 120px;
+    -fx-min-width: 120px;
+    -fx-max-width: 120px;
+    -fx-alignment: center;
+    -fx-border-style: hidden;
+    -fx-border-width: 1px;
+}
+
+.text-field{
+    -fx-font: 48px arial;
+    -fx-min-height: 120px;
+    -fx-max-height: 120px;
+    -fx-min-width: 120px;
+    -fx-max-width: 120px;
+    -fx-alignment: center;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-background-color: #DDF;
+    -fx-border-color: #229;
+}
+
+.text-field:hover{
+    -fx-background-color: #EEF;
+}
+
+.text-field:contradiction{
+    -fx-text-fill: #900;
+    -fx-background-color: #FEE;
+}
+
+.text-field:focused{
+    -fx-background-color: #EFE;
+}
+
+.text-field:bottom{
+    -fx-border-width: 1px 1px 3px  1px;
+}
+
+.text-field:right{
+    -fx-border-width: 1px  3px  1px 1px;
+}
+
+.text-field:bottom-right{
+    -fx-border-width: 1px  3px  3px  1px;
+}
