@@ -1,13 +1,18 @@
 package com.example.sudoku_cheat_machine;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -22,10 +27,30 @@ public class SudokuPresenter extends Application {
         //textFields is where the user inputs their sudoku numbers
         //hintLabels contain the hints that can be deduced from the entered numbers
         //ghostLabels contain the unique number that must be entered into the field, if such a number exists
+        HBox root = new HBox();
+
         TextField[][] textFields = new TextField[9][9];
         Label[][] hintLabels = new Label[9][9];
         Label[][] ghostLabels = new Label[9][9];
         GridPane sudokuGrid = new GridPane();
+        Button resetButton = new Button("Reset");
+
+        resetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                resetPresentation(textFields);
+            }
+        });
+
+        /*Label infoLabel = new Label(
+                "Welcome to the Sudoku Cheat Machine! Enter a Sudoku into the grid on the left."+
+                        "\nThe grey numbers on top of the fields indicate what numbers are possible " +
+                        "\nin the field, given the current information. Once enough numbers have been" +
+                        "\nentered, the program may begin to fill in uniquely determined numbers in " +
+                        "\ngreen. Contradictions, meaning forbidden double numbers or configurations " +
+                        "\n that lead to a field being unfillable, will be indicated in red. Have fun!");*/
+
+        GridPane.setValignment(resetButton, VPos.BOTTOM);
 
         initializeAndFormatLabels(textFields, hintLabels, ghostLabels);
         restrictTextFormatting(textFields);
@@ -35,7 +60,14 @@ public class SudokuPresenter extends Application {
         addToRoot(sudokuGrid, ghostLabels);
         addToRoot(sudokuGrid, hintLabels);
 
-        Scene scene = new Scene(sudokuGrid);
+        root.getChildren().add(sudokuGrid);
+        root.getChildren().add(resetButton);
+
+        resetButton.setPrefSize(200,100);
+        HBox.setHgrow(sudokuGrid, Priority.ALWAYS);
+
+        Scene scene = new Scene(root);
+        stage.setResizable(false);
         scene.getStylesheets().add(SudokuPresenter.class.getResource("sudoku.css").toExternalForm());
         stage.setTitle("Sudoku Cheat Machine");
         stage.setScene(scene);
@@ -52,19 +84,26 @@ public class SudokuPresenter extends Application {
                 hintLabels[i][j] = new Label("");
                 textFields[i][j] = new TextField("");
                 ghostLabels[i][j] = new Label("");
+                textFields[i][j].setPrefSize(100,100);
+                ghostLabels[i][j].setPrefSize(100,100);
 
                 //be able to click through ghost labels & hint labels
                 hintLabels[i][j].setMouseTransparent(true);
                 ghostLabels[i][j].setMouseTransparent(true);
 
+                // allow text wrapping
+                hintLabels[i][j].setWrapText(true);
+
                 //place row & column alignment within the grid
                 GridPane.setConstraints(hintLabels[i][j], i, j);
-                GridPane.setConstraints(textFields[i][j],i, j);
+                GridPane.setConstraints(textFields[i][j], i, j);
                 GridPane.setConstraints(ghostLabels[i][j], i, j);
 
                 //position hints within a grid field
                 GridPane.setValignment(hintLabels[i][j], VPos.TOP);
                 GridPane.setHalignment(hintLabels[i][j], HPos.CENTER);
+                GridPane.setValignment(ghostLabels[i][j], VPos.CENTER);
+                GridPane.setHalignment(ghostLabels[i][j], HPos.CENTER);
 
                 //pseudoclasses for CSS
                 hintLabels[i][j].pseudoClassStateChanged(PseudoClass.getPseudoClass("hintLabel"), true);
@@ -78,6 +117,14 @@ public class SudokuPresenter extends Application {
                 }  else if(j % 3 == 2) {
                     textFields[i][j].pseudoClassStateChanged(PseudoClass.getPseudoClass("bottom"), true);
                 }
+            }
+        }
+    }
+
+    public static void resetPresentation(TextField[][] textFields) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                textFields[i][j].setText("");
             }
         }
     }

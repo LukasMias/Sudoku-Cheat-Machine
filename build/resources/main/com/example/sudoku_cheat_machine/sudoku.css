@@ -1,31 +1,29 @@
 
 .label{
     -fx-font: 12px arial;
-    -fx-text-alignment: justify;
+    -fx-max-width: 80px;
+    -fx-min-height: 30px;
 }
 
 .label:hintLabel {
     -fx-text-fill: grey;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
 .label:ghostLabel{
+    -fx-font: 30px arial;
     -fx-text-fill: #090;
-    -fx-font: 48px arial;
-    -fx-min-height: 120px;
-    -fx-max-height: 120px;
-    -fx-min-width: 120px;
-    -fx-max-width: 120px;
+    -fx-text-alignment: center;
     -fx-alignment: center;
-    -fx-border-style: hidden;
-    -fx-border-width: 1px;
+}
+
+.button {
+    -fx-font: 20px arial;
 }
 
 .text-field{
-    -fx-font: 48px arial;
-    -fx-min-height: 120px;
-    -fx-max-height: 120px;
-    -fx-min-width: 120px;
-    -fx-max-width: 120px;
+    -fx-font: 30px arial;
     -fx-alignment: center;
     -fx-border-style: solid;
     -fx-border-width: 1px;

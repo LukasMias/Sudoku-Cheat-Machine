@@ -113,7 +113,7 @@ public class Sudoku {
         return deepEquals(this.entries, sudoku.entries);
     }
 
-    //clone only the entries
+    //clones only the entries, not the hints
     @Override
     public Sudoku clone() {
         Sudoku copy = new Sudoku();
